@@ -1,4 +1,4 @@
-const db = require('../data/schemes.db3');
+const db = require('../data/db-config.js');
 
 module.exports = {
   find,
@@ -17,11 +17,11 @@ function findById(id) {
   return db('schemes').where({ id }).first();
 }
 
-function findSteps(scheme_name) {
-  return db('posts as p')
-    .join('schemes as s', 's.id', 'p.scheme_id')
-    .select('p.id', 'p.contents', 'u.username')
-    .where({ scheme_name });
+function findSteps(scheme_id) {
+  return db('steps as s')
+    .join('schemes as s', 's.id', 's.scheme_id')
+    .select('s.id', 's.scheme_id', 's.step_number', 's.instructions' )
+    .where({ scheme_id });
 }
 
 function add(scheme) {
